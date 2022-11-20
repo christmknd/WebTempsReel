@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+
+    backend:
+        build:
+          context: back/
+        depends_on:
+          - database
+        environment:
+          - POSTGRES_USER=${POSTGRES_USER}
+          - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+          - POSTGRES_DB=${POSTGRES_DB}
+          - POSTGRES_HOST=${POSTGRES_HOST}
+          - PORT_POSTGRES=${PORT_POSTGRES}
+          - PORT_BACKEND=${PORT_BACKEND}
+        ports:
+            - ${PORT_BACKEND}:${PORT_BACKEND}
+        volumes:
+          - ./back/src:/app/src
+    
+    frontend:
+        build:
+          context: front/
+        environment:
+          - REACT_APP_API_BACK=${REACT_APP_API_BACK}
+          - REACT_APP_WS_BACK=${REACT_APP_WS_BACK}
+        ports:
+          - ${PORT_FRONTEND}:3000
+        depends_on:
+          - backend
+        volumes:
+          - ./front/src:/app/src
+        command: npm start
+
+    database:
+        image: 'postgres:14-alpine'
+        ports:
+          - ${PORT_POSTGRES}:5432
+        environment:
+          - POSTGRES_USER=${POSTGRES_USER}
+          - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+          - POSTGRES_DB=${POSTGRES_DB}
+        volumes:
+          - db-data:/var/lib/postgresql/data/
+
+    pgadmin:
+        image: dpage/pgadmin4
+        ports:
+          - ${PORT_PGADMIN}:80
+        environment:
+          - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+          - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+        depends_on:
+          - database  
+
+volumes:
+  db-data:
+    driver: local
+    name: volume_bdd_pg

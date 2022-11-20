@@ -2,16 +2,17 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "start:socket": "nodemon sources/socket/index.js",
-        "start:client": "vite"
+        "start": "nodemon src/server.js"
     },
     "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
         "socket.io": "4.5.2",
         "socket.io-client": "4.5.2",
         "up": "^1.0.2"
     },
     "devDependencies": {
-        "nodemon": "2.0.20",
-        "vite": "3.1.2"
+        "nodemon": "2.0.20"
     }
 }

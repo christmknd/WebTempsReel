@@ -1,3 +1,10 @@
+# Web Temps Reel
+
+2 methodes de travail
+
+- Docker-compose avec un volume pointant sur le dossier src
+- En local
+
 ## Requirements
 
 - Docker
