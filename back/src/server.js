@@ -5,6 +5,7 @@
  */
 
  import app from "./http/app.js";
+ import connectDb from "./database.js";
  import http from "http";
  import { Server } from "socket.io";
  import { OnConnection } from "./ws/service/connection.js";
@@ -36,6 +37,7 @@
   * Listen on provided port, on all network interfaces.
   */
  
+  connectDb()
  server.listen(port);
  server.on('error', onError);
  server.on('listening', onListening);
