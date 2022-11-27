@@ -1,22 +1,18 @@
-import pg from "pg";
-const { Client } = pg
+import sq from "sequelize";
+const { Sequelize } = sq
 
-const connectDb = async () => {
+export const database = new Sequelize(process.env.POSTGRES_DB, process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, {
+    host: process.env.POSTGRES_HOST,
+    dialect: 'postgres',
+  });
+
+  const connectDb = async () => {
     try {
-    const client = new Client({
-        host: process.env.POSTGRES_HOST,
-        user: process.env.POSTGRES_USER,
-        password: process.env.POSTGRES_PASSWORD,
-        database: process.env.POSTGRES_DB,
-        port: process.env.PORT_POSTGRES
-    })
-    
-    await client.connect()
-    console.log("DB Connected!");
-    await client.end()
-    } catch (error) {
-    console.log(error)
+        await database.authenticate();
+        console.log('Connection has been established successfully.');
+      } catch (error) {
+        console.error('Unable to connect to the database:', error);
+      }
     }
-}
 
 export default connectDb;

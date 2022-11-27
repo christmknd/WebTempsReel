@@ -10,7 +10,9 @@
  import { Server } from "socket.io";
  import { OnConnection } from "./ws/service/connection.js";
  
- 
+ // Connection to Database
+ connectDb()
+
  /**
   * Get port from environment and store in Express.
   */
@@ -37,7 +39,6 @@
   * Listen on provided port, on all network interfaces.
   */
  
-  connectDb()
  server.listen(port);
  server.on('error', onError);
  server.on('listening', onListening);
