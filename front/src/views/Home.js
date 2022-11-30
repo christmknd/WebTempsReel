@@ -1,4 +1,4 @@
-import React, { createContext, /*useContext*/ } from 'react';
+import React, { createContext, useContext } from 'react';
 
 //Anon
 //import Login from '../components/Anonyme/Login' ;
@@ -61,4 +61,4 @@ const Home = () => {
   }
 }
 
-export default Home
+export default Home;
