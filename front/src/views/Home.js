@@ -25,6 +25,8 @@ const Home = () => {
   return (
 
     //changer le role ici pour voir les differentes versions de l'appli
+    //context => en attendant l'implementation de l'auth 
+
     <UserContext.Provider value={role}>
     <div className='Home'>
         <h1>ESGI Moto</h1>
@@ -34,7 +36,6 @@ const Home = () => {
   )
 
 
-  //Quand l'utilisateur est connecté 
   function Usermode() {
   const mode = useContext(UserContext)
 
