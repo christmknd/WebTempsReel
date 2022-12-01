@@ -41,3 +41,9 @@ docker-compose exec node npm start:socket
 ```bash
 docker-compose down --remove-orphans --volumes --timeout 0
 ```
+
+### Lancer test K6
+
+```bash
+docker-compose run --rm k6 run /performance/script.js
+```

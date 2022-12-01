@@ -56,7 +56,7 @@ services:
 
     k6:
         image: loadimpact/k6:latest
-        command: run performance/script.js
+        command: run  /performance/script.js
         volumes:
           - ./performance:/performance
 
