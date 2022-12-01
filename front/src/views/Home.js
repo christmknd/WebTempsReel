@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from 'react';
 
 //Anon
-import Login from '../components/Anonyme/Login' ;
+import Login from '../components/Anonyme/Login'
 
 //admin
 import AdminDashboard from '../components/Connected/Admin/AdminDashboard';
