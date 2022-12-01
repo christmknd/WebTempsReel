@@ -1,10 +1,10 @@
 import React, { createContext, useContext } from 'react';
 
 //Anon
-//import Login from '../components/Anonyme/Login' ;
+import Login from '../components/Anonyme/Login' ;
 
 //admin
-//import AdminDashboard from '../components/Connected/Admin/AdminDashboard';
+import AdminDashboard from '../components/Connected/Admin/AdminDashboard';
 
 //user
 import UserDashboard from '../components/Connected/User/UserDashboard';
@@ -15,49 +15,53 @@ import Salon from '../components/Connected/Salon';
 const Home = () => {
 
   const role = {
-    anonyme : 'anonMode',
-    user : 'userMode',
-    admin : 'adminMode'
+    anonyme : 'anonyme',
+    user : 'user',
+    admin : 'admin',
   }
 
   const UserContext = createContext(role)
 
   return (
 
-    <UserContext.Provider value={role.user}>
-       <div className='Home'>
+    //changer le role ici pour voir les differentes versions de l'appli
+    <UserContext.Provider value={role}>
+    <div className='Home'>
         <h1>ESGI Moto</h1>
         <Usermode/>
     </div>
     </UserContext.Provider>
   )
 
-  /*
-  //Quand l'utilisateur n'est pas connecté
-  function AnonymeAdmin() {
-    const mode = useContext(UserContext);
-    <Login/>
-  }
-
-  //Quand on se connecte en tant qu'Admin
-  function Adminmode() {
-    const mode = useContext(UserContext);
-    return (
-      <AdminDashboard/>
-    )
-  }
-  */
 
   //Quand l'utilisateur est connecté 
   function Usermode() {
-     //const mode = useContext(UserContext)
-     return (
-      <>
-      <UserDashboard/>
-      <Salon/>
-      <Chatbot/>
-      </> 
-     )
+  const mode = useContext(UserContext)
+
+  switch (mode) {
+    case 'user' :
+      return (
+        <>
+        <UserDashboard/>
+        <Salon/>
+        <Chatbot/>
+        </> 
+      )
+      break;
+
+    case 'admin':
+      return (
+      <AdminDashboard/>
+      )
+      break;
+
+    default:
+      return (
+        <Login/>        
+      )
+      break;
+  }
+
   }
 }
 

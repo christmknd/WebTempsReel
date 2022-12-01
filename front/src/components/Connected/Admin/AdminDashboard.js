@@ -3,7 +3,6 @@ import React from 'react'
 const AdminDashboard = () => {
   return (
     <div className='adminDashboard'>
-      <h1>{{}}</h1>
       <div className='gestionCommunication'>
         <h3>Communication en cours</h3>
       </div>
