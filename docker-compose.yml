@@ -52,7 +52,13 @@ services:
           - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
           - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
         depends_on:
-          - database  
+          - database
+
+    k6:
+        image: loadimpact/k6:latest
+        command: run  /performance/script.js
+        volumes:
+          - ./performance:/performance
 
 volumes:
   db-data:
