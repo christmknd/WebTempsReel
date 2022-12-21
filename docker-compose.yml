@@ -3,6 +3,8 @@ version: '3.8'
 services:
 
     backend:
+        container_name: WTR_api
+        image: wtr_express 
         build:
           context: back/
         depends_on:
@@ -14,17 +16,22 @@ services:
           - POSTGRES_HOST=${POSTGRES_HOST}
           - PORT_POSTGRES=${PORT_POSTGRES}
           - PORT_BACKEND=${PORT_BACKEND}
+          - PORT_FRONTEND=${PORT_FRONTEND}
         ports:
             - ${PORT_BACKEND}:${PORT_BACKEND}
         volumes:
           - ./back/src:/app/src
+        command: npm start
     
     frontend:
+        container_name: WTR_web
+        image: wtr_reactjs 
         build:
           context: front/
         environment:
           - REACT_APP_API_BACK=${REACT_APP_API_BACK}
           - REACT_APP_WS_BACK=${REACT_APP_WS_BACK}
+          - REACT_APP_PORT_BACKEND=${PORT_BACKEND}
         ports:
           - ${PORT_FRONTEND}:3000
         depends_on:
@@ -34,9 +41,8 @@ services:
         command: npm start
 
     database:
+        container_name: WTR_database
         image: 'postgres:14-alpine'
-        ports:
-          - ${PORT_POSTGRES}:5432
         environment:
           - POSTGRES_USER=${POSTGRES_USER}
           - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -45,6 +51,7 @@ services:
           - db-data:/var/lib/postgresql/data/
 
     pgadmin:
+        container_name: WTR_pgadmin
         image: dpage/pgadmin4
         ports:
           - ${PORT_PGADMIN}:80
@@ -54,13 +61,6 @@ services:
         depends_on:
           - database
 
-    k6:
-        image: loadimpact/k6:latest
-        command: run  /performance/script.js
-        volumes:
-          - ./performance:/performance
-
 volumes:
   db-data:
-    driver: local
-    name: volume_bdd_WebTempsReel
+    name: WTR_volume_bdd

@@ -2,22 +2,25 @@ import React, { useState, useEffect } from 'react';
 
 import io from 'socket.io-client';
 
-const socket = io(process.env.REACT_APP_WS_BACK);
+const urlWS = `${process.env.REACT_APP_WS_BACK}:${process.env.REACT_APP_PORT_BACKEND}`
+const socket = io(urlWS);
 
 function Test() {
     const [message, setMessage] = useState('');
+
     useEffect( () => {
-        fetch(`${process.env.REACT_APP_API_BACK}message`)
+        const urlHttp = `${process.env.REACT_APP_API_BACK}:${process.env.REACT_APP_PORT_BACKEND}/message`
+        fetch(urlHttp)
         .then(response => response.json())
         .then(data => setMessage(data.message))
-        .catch((error) => console.log(error))
-
-        socket.on("connect", () => {
-            console.log("Connected to the socket");
-            var inputName = document.getElementById('MyIDSocket');
-            inputName.innerText= `My ID socket ${socket.id}`;
-        } )
+        .catch((error) => console.error(error))
       },[]);
+
+      socket.on("connect", () => {
+        console.log("Connected to the socket");
+        var inputName = document.getElementById('MyIDSocket');
+        inputName.innerText= `My ID socket ${socket.id}`;
+    } )
 
     return (
         <div className="Test">
