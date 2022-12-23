@@ -4,18 +4,18 @@ import ListUsers from "../components/Chat/ListUsers";
 import Nav from "../components/Nav";
 
 function ChatRoom() {
-  const [idUserSelected, setIdUserSelected] = useState('')
+  const [idUserSelected, setIdUserSelected] = useState("");
 
   function selectUser(id) {
-    setIdUserSelected(id)
+    setIdUserSelected(id);
   }
 
   return (
     <div className="ChatRoom">
       <Nav />
-      <h1>ChatRoom page</h1>
-      <ListUsers selectUser={selectUser}/>
-      <Chat id={idUserSelected}/>
+      <h1>ChatRoom</h1>
+      <ListUsers selectUser={selectUser} />
+      <Chat id={idUserSelected} />
     </div>
   );
 }

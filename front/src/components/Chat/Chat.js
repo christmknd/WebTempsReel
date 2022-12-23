@@ -57,12 +57,12 @@ function Chat(props) {
 
   function sendMessage(data) {
     const urlHttp = `${process.env.REACT_APP_API_BACK}:${process.env.REACT_APP_PORT_BACKEND}/messages/`;
-        fetch(urlHttp, {
-          method: 'POST',
-          body: JSON.stringify(data)
-        })
-          .then((response) => response.json())
-          .catch((error) => console.error(error));
+    fetch(urlHttp, {
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .catch((error) => console.error(error));
   }
 
   return (
