@@ -14,33 +14,28 @@ function ChatBot() {
     setActiveChat(true);
   }
 
-  socket.on("init_chatbot", (questions) => {
+  socket.on("init_question", (questions) => {
     setQuestions(questions);
   });
 
   function responseChatbot(el) {
-    if (el.id === 0) {
-      closeChatbot();
-    }
     socket.emit("response_chatbot", el.id);
     setMessages([...messages, el]);
   }
 
-  socket.on("response_chatbot", (questions) => {
-    setQuestions(questions);
-  });
-
-  function closeChatbot() {
-    socket.emit("close_chatbot");
+  socket.on("close_chatbot", (msg) => {
+    setMessages([...messages, msg]);
     setQuestions([]);
-    socket.on("close_chatbot", (msg) => {
-      setMessages([...messages, msg]);
-    });
     setTimeout(() => {
       setActiveChat(false);
       setMessages([]);
     }, 3000);
-  }
+  });
+
+  socket.on("resp_contact", (el) => {
+    setMessages([...messages, el.resp]);
+    setQuestions(el.question);
+  });
 
   return (
     <div className="ChatBot" style={{ border: "solid" }}>
