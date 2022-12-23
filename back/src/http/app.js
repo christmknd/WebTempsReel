@@ -1,16 +1,24 @@
-import * as dotenv from 'dotenv'
-import express from 'express';
-import  cors from "cors";
+const express = require('express');
+const cors = require("cors");
+const db = require("./database.js");
 
-dotenv.config()
+require('dotenv').config()
 
-import userRouter from "./user/user.routes.js";
+const userRouter = require("./user/user.routes.js");
 
 const app = express();
 
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+db.sequelize.sync()
+  .then(() => {
+    console.log("Synced db.");
+  })
+  .catch((err) => {
+    console.log("Failed to sync db: " + err.message);
+  });
 
 
 app.get('/', (req, res) => {
@@ -23,4 +31,4 @@ app.get('/message', (req, res) => {
 
 app.use('/users', userRouter);
 
-export default app;
+module.exports = app;

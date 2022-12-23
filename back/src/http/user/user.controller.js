@@ -1,12 +1,4 @@
-import userService from "./user.service.js";
-
-const userController = {
-    addUser: addUser,
-    findUsers: findUsers,
-    findUserById: findUserById,
-    updateUser: updateUser,
-    deleteById: deleteById
-}
+const userService = require("./user.service.js");
 
 function addUser(req, res) {
     let user = req.body;
@@ -70,4 +62,12 @@ function findUsers(req, res) {
         });
 }
 
-export default userController;
+const userController = {
+    addUser,
+    findUsers,
+    findUserById,
+    updateUser,
+    deleteById
+}
+
+module.exports = userController;

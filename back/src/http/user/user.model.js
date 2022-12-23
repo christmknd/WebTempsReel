@@ -1,9 +1,7 @@
-import { DataTypes } from 'sequelize';
+module.exports = (sequelize, Sequelize) => {
+  const User = sequelize.define("user", {
+    username: Sequelize.STRING,
+  });
 
-import {database} from "../../database.js";
-
-const User = database.define('user', {
-  username: DataTypes.STRING,
-});
-
-export default User;
+  return User;
+};

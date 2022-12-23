@@ -4,14 +4,11 @@
  * Module dependencies.
  */
 
- import app from "./http/app.js";
- import connectDb from "./database.js";
- import http from "http";
- import { Server } from "socket.io";
- import { OnConnection } from "./ws/service/connection.js";
- 
- // Connection to Database
- connectDb()
+ const app = require("./http/app.js");
+ const http = require("http");
+ const { Server } = require("socket.io");
+ const { OnConnection } = require("./ws/service/connection.js");
+
 
  /**
   * Get port from environment and store in Express.

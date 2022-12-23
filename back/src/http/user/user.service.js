@@ -1,12 +1,5 @@
-import User from "./user.model.js";
-
-const userService = {
-    findAll: findAll,
-    create: create,
-    findById: findById,
-    deleteById: deleteById,
-    update: update
-}
+const db = require("../database");
+const User = db.users;
 
 function findAll() {
     return User.findAll();
@@ -35,4 +28,13 @@ function update(user, id) {
     };
     return User.update(updateUser, { where: { id: id } });
 }
-export default userService;
+
+const userService = {
+    findAll,
+    create,
+    findById,
+    deleteById,
+    update
+}
+
+module.exports = userService;
