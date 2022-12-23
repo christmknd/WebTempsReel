@@ -8,6 +8,8 @@ function ChatBot() {
   const [messages, setMessages] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [activeChat, setActiveChat] = useState(false);
+  const [inputDate, setInputDate] = useState(false);
+  const [dateEntretien, setDateEntretien] = useState("");
 
   function activeChatbot() {
     socket.emit("init_chatbot");
@@ -15,7 +17,11 @@ function ChatBot() {
   }
 
   socket.on("init_question", (questions) => {
-    setQuestions(questions);
+    if (questions[0].id === 11 || questions[0].id === 13) {
+      setInputDate(true);
+      setMessages([...messages, questions[0]]);
+      setQuestions([]);
+    } else setQuestions(questions);
   });
 
   function responseChatbot(el) {
@@ -37,18 +43,51 @@ function ChatBot() {
     setQuestions(el.question);
   });
 
+  function handleChangeDate(e) {
+    setDateEntretien(e.target.value);
+  }
+
+  function handleSubmitDate(e) {
+    e.preventDefault();
+    let obj;
+    // Calcul date
+    const dateNow1yearAgo = 1000 * 60 * 60 * 24 * 365 * 1;
+    if (
+      new Date(dateEntretien).getTime() <
+      new Date().getTime() - dateNow1yearAgo
+    ) {
+      obj = { id: 12, question: `${dateEntretien} - date du dernier entretien est supérieur à un an` };
+    } else {
+      obj = { id: 13, question: `${dateEntretien} - date du dernier entretien est inférieur à un an` };
+    }
+    setMessages([...messages, obj]);
+    setInputDate(false)
+    setDateEntretien("");
+    responseChatbot(obj);
+  }
+
   return (
     <div className="ChatBot" style={{ border: "solid" }}>
       {activeChat ? (
         <ul>
           {messages.map((el, i) => (
-            <li key={i}>{el.question}</li>
+            <li key={el.id}>{el.question}</li>
           ))}
           {questions.map((el) => (
             <button onClick={() => responseChatbot(el)} key={el.id}>
               {el.question}
             </button>
           ))}
+          {inputDate && (
+            <form onSubmit={handleSubmitDate}>
+              <input
+                type="date"
+                value={dateEntretien}
+                onChange={handleChangeDate}
+              />
+              <input type="submit" value="Submit" />
+            </form>
+          )}
         </ul>
       ) : (
         <button onClick={activeChatbot}>Chatbot</button>
