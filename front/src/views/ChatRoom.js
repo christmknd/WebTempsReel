@@ -6,7 +6,7 @@ import Nav from "../components/Nav";
 function ChatRoom() {
   const [idUserSelected, setIdUserSelected] = useState('')
 
-  const selectUser = function (id) {
+  function selectUser(id) {
     setIdUserSelected(id)
   }
 
