@@ -14,7 +14,7 @@
 ### Docker Compose Startup
 
 ```bash
-docker-compose up -d
+docker-compose up -d --build
 ```
 
 ### Docker Compose Shutdown
@@ -39,7 +39,7 @@ place d’un système d'échange instantané afin de renforcer sa communication 
 
 #### Role User
 
-[x] Il est possible de demander à communiquer avec un conseiller de vente
+[] Il est possible de demander à communiquer avec un conseiller de vente
 
 [] En cas de conseiller non-disponible, il n’est pas possible de demander à communiquer avec un conseiller de vente
 
