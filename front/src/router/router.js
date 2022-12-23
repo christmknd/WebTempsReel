@@ -1,14 +1,19 @@
 import { createBrowserRouter } from "react-router-dom";
-import App from "../views/App";
 import Home from "../views/Home";
+import ChatRoom from "../views/ChatRoom";
+import WSTest from "../components/WSTest";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
-    element: <App/>,
-  },
-  {
     path: "/home",
     element: <Home/>,
+  },
+  {
+    path: "/chatroom",
+    element: <ChatRoom/>,
+  },
+  {
+    path: "/websocket",
+    element: <WSTest/>,
   },
 ]);

@@ -8,7 +8,10 @@ function Nav() {
           <Link to={`/home`}>Home</Link>
         </li>
         <li>
-          <Link to={`/`}>App</Link>
+          <Link to={`/chatroom`}>ChatRoom</Link>
+        </li>
+        <li>
+          <Link to={`/websocket`}>Test Websocket</Link>
         </li>
       </ul>
     </nav>
