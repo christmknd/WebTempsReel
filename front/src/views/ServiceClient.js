@@ -3,6 +3,7 @@ import Nav from "../components/Nav";
 
 import io from "socket.io-client";
 import Chat from "../components/Chat/Chat";
+import ChatBot from "../components/ChatBot/ChatBot";
 
 const urlWS = `${process.env.REACT_APP_WS_BACK}:${process.env.REACT_APP_PORT_BACKEND}`;
 const socket = io(urlWS);
@@ -61,6 +62,7 @@ function ServiceClient() {
         </p>
       )}
       {chat && <Chat id={idSAV} />}
+      <ChatBot/>
     </div>
   );
 }
