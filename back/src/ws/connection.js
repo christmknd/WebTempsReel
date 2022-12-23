@@ -3,7 +3,6 @@ const fnWSChatbot = require("./chatbot");
 function OnConnection(socket) {
   console.log(`user connected ${socket.id}`);
   fnWSChatbot.initChatbot(socket);
-  fnWSChatbot.closeChatbot(socket);
   fnWSChatbot.responseChatbot(socket)
   socket.on("disconnect", () => {
     console.log("user disconnected");
