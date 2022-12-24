@@ -3,6 +3,8 @@ import Home from "../views/Home";
 import ChatRoom from "../views/ChatRoom";
 import ServiceClient from "../views/ServiceClient";
 import WSTest from "../components/WSTest";
+import PageNotFound from "../views/PageNotFound";
+
 
 export const router = createBrowserRouter([
   {
@@ -21,4 +23,9 @@ export const router = createBrowserRouter([
     path: "/websocket",
     element: <WSTest />,
   },
+  {
+    path: "*",
+    element: <PageNotFound/>
+  }
+  
 ]);
