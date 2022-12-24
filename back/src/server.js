@@ -7,7 +7,6 @@
 const app = require("./http/app.js");
 const http = require("http");
 const { Server } = require("socket.io");
-const { OnConnection } = require("./ws/connection.js");
 
 /**
  * Get port from environment and store in Express.
@@ -39,7 +38,29 @@ const io = new Server(server, {
 server.listen(port);
 server.on("error", onError);
 server.on("listening", onListening);
-io.on("connection", OnConnection);
+
+const registerChatbotHandlers = require("./ws/chatbot");
+const registerSavHandlers = require("./ws/sav");
+
+const onConnectionClient = (socket) => {
+  console.log(`user connected ${socket.id}`);
+  registerChatbotHandlers(io, socket);
+  registerSavHandlers(io, socket);
+  socket.on("disconnect", () => {
+    console.log(`user disconnected ${socket.id}`);
+  });
+};
+
+io.on("connection", onConnectionClient);
+
+const onConnectionAdmin = (socket) => {
+  console.log(`admin connected ${socket.id}`);
+  socket.on("disconnect", () => {
+    console.log(`admin disconnected ${socket.id}`);
+  });
+};
+
+io.of("/admin").on("connection", onConnectionAdmin);
 
 /**
  * Normalize a port into a number, string, or false.
