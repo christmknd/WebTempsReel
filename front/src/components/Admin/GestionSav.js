@@ -13,7 +13,7 @@ function GestionSav (){
     return (
         <div className="communication">
             <div className="statusConseiller">
-            <h4>Statut</h4>
+            <h4>Définir son statut</h4>
             <p><span>{status}</span></p> 
             <button onClick={changeStatus}>Change status</button>
             </div>
