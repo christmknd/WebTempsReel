@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import io from "socket.io-client";
+import FormDateEntretien from "./FormDateEntretien";
+import FormNbrKlm from "./FormNbrKlm";
 
 const urlWS = `${process.env.REACT_APP_WS_BACK}:${process.env.REACT_APP_PORT_BACKEND}`;
 const socket = io(urlWS);
@@ -8,27 +10,46 @@ function ChatBot() {
   const [messages, setMessages] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [activeChat, setActiveChat] = useState(false);
-  const [inputDate, setInputDate] = useState(false);
-  const [dateEntretien, setDateEntretien] = useState("");
+  const [input, setInput] = useState("");
+  const [upChatBot, setUpChatBot] = useState(false);
 
-  function activeChatbot() {
-    socket.emit("init_chatbot");
-    setActiveChat(true);
-  }
+  // connect WS
+  socket.on("connect", () => {
+    setUpChatBot(true);
 
-  socket.on("init_question", (questions) => {
-    if (questions[0].id === 11 || questions[0].id === 13) {
-      setInputDate(true);
-      setMessages([...messages, questions[0]]);
+    socket.on("disconnect", () => {
+      setUpChatBot(false);
+      setMessages([]);
       setQuestions([]);
-    } else setQuestions(questions);
+      setActiveChat(false);
+      setInput("");
+    });
   });
 
-  function responseChatbot(el) {
-    socket.emit("response_chatbot", el.id);
-    setMessages([...messages, el]);
-  }
+  // Init principal question
+  // Certains cas Form
+  socket.on("init_question", (arr_questions) => {
+    // Custom for Form
+    if (arr_questions[0].id === 11 || arr_questions[0].id === 130) {
+      if (arr_questions[0].id === 11) {
+        setInput(<FormDateEntretien returnFormObj={returnFormObj} />);
+      } else if (arr_questions[0].id === 130) {
+        setInput(<FormNbrKlm returnFormObj={returnFormObj} />);
+      }
+      setMessages([...messages, arr_questions[0]]);
+      setQuestions([]);
+    } else {
+      setQuestions(arr_questions);
+    }
+  });
 
+  // Retour custom contact
+  socket.on("resp_contact", (el) => {
+    setMessages([...messages, el.resp]);
+    setQuestions(el.text);
+  });
+
+  // Close chatbot
   socket.on("close_chatbot", (msg) => {
     setMessages([...messages, msg]);
     setQuestions([]);
@@ -38,32 +59,20 @@ function ChatBot() {
     }, 3000);
   });
 
-  socket.on("resp_contact", (el) => {
-    setMessages([...messages, el.resp]);
-    setQuestions(el.question);
-  });
-
-  function handleChangeDate(e) {
-    setDateEntretien(e.target.value);
+  function activeChatbot() {
+    socket.emit("init_chatbot");
+    setActiveChat(true);
   }
 
-  function handleSubmitDate(e) {
-    e.preventDefault();
-    let obj;
-    // Calcul date
-    const dateNow1yearAgo = 1000 * 60 * 60 * 24 * 365 * 1;
-    if (
-      new Date(dateEntretien).getTime() <
-      new Date().getTime() - dateNow1yearAgo
-    ) {
-      obj = { id: 12, question: `${dateEntretien} - date du dernier entretien est supérieur à un an` };
-    } else {
-      obj = { id: 13, question: `${dateEntretien} - date du dernier entretien est inférieur à un an` };
-    }
-    setMessages([...messages, obj]);
-    setInputDate(false)
-    setDateEntretien("");
+  function responseChatbot(el) {
+    setMessages([...messages, el]);
+    socket.emit("response_chatbot", el.id);
+    setQuestions([]);
+  }
+
+  function returnFormObj(obj) {
     responseChatbot(obj);
+    setInput("");
   }
 
   return (
@@ -71,27 +80,23 @@ function ChatBot() {
       {activeChat ? (
         <ul>
           {messages.map((el, i) => (
-            <li key={el.id}>{el.question}</li>
+            <li key={i}>{el.text}</li>
           ))}
-          {questions.map((el) => (
-            <button onClick={() => responseChatbot(el)} key={el.id}>
-              {el.question}
+          {questions.map((el, i) => (
+            <button onClick={() => responseChatbot(el)} key={i}>
+              {el.text}
             </button>
           ))}
-          {inputDate && (
-            <form onSubmit={handleSubmitDate}>
-              <input
-                type="date"
-                value={dateEntretien}
-                onChange={handleChangeDate}
-              />
-              <input type="submit" value="Submit" />
-            </form>
-          )}
+          {input}
         </ul>
       ) : (
-        <button onClick={activeChatbot}>Chatbot</button>
+        <div>
+          <button disabled={!upChatBot} onClick={activeChatbot}>
+            Chatbot
+          </button>
+        </div>
       )}
+      {upChatBot ? <p>Online</p> : <p>Offline</p>}
     </div>
   );
 }
