@@ -20,7 +20,7 @@ services:
       - ${PORT_BACKEND}:${PORT_BACKEND}
     volumes:
       - ./back/src:/app/src
-    command: npm install && npm start
+    command: npm start
 
   frontend:
     container_name: WTR_web
