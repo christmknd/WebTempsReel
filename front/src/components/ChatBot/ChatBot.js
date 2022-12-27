@@ -28,7 +28,7 @@ function ChatBot() {
 
   // Init principal question
   // Certains cas Form
-  socket.on("init_question", (arr_questions) => {
+  socket.on("chatbot:questions", (arr_questions) => {
     // Custom for Form
     if (arr_questions[0].id === 11 || arr_questions[0].id === 130) {
       if (arr_questions[0].id === 11) {
@@ -44,13 +44,13 @@ function ChatBot() {
   });
 
   // Retour custom contact
-  socket.on("resp_contact", (el) => {
+  socket.on("chatbot:reponses:contact", (el) => {
     setMessages([...messages, el.resp]);
     setQuestions(el.text);
   });
 
   // Close chatbot
-  socket.on("close_chatbot", (msg) => {
+  socket.on("chatbot:close", (msg) => {
     setMessages([...messages, msg]);
     setQuestions([]);
     setTimeout(() => {
@@ -60,13 +60,13 @@ function ChatBot() {
   });
 
   function activeChatbot() {
-    socket.emit("init_chatbot");
+    socket.emit("chatbot:questions");
     setActiveChat(true);
   }
 
   function responseChatbot(el) {
     setMessages([...messages, el]);
-    socket.emit("response_chatbot", el.id);
+    socket.emit("chatbot:reponses", el.id);
     setQuestions([]);
   }
 

@@ -1,5 +1,6 @@
 const db = require("../database");
 const User = db.users;
+const Appointment = require("../appointment/appointment.model");
 
 function findAll() {
     return User.findAll();
