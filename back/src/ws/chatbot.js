@@ -5,7 +5,6 @@ module.exports = (io, socket) => {
   const initQuestions = () => {
     socket.emit("chatbot:questions", types_aide);
   };
-
   const responseQuestions = (id) => {
     if (id === 1) {
       socket.emit("chatbot:questions", [
