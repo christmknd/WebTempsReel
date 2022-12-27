@@ -6,8 +6,9 @@ async function findAll() {
   return reponse;
 }
 
-function findById(id) {
-  return User.findByPk(id);
+async function findById(id) {
+  const response = await User.findByPk(id);
+  return response;
 }
 
 async function findByUsername(username) {

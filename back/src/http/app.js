@@ -5,6 +5,7 @@ const db = require("./database.js");
 require("dotenv").config();
 
 const userRouter = require("./user/user.routes.js");
+const isAuthenticated = require("./middlewares/auth.js");
 
 const app = express();
 
@@ -21,7 +22,7 @@ db.sequelize
     console.log("Failed to sync db: " + err.message);
   });
 
-app.get("/", (req, res) => {
+app.get("/", isAuthenticated, (req, res) => {
   res.json("Hello world !");
 });
 

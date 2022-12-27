@@ -20,7 +20,9 @@ async function login(req, res) {
       return res.status(400).json({ message: "Invalid password" });
     }
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-    return res.status(200).json({ token: token, user_id: user.id });
+    return res
+      .status(200)
+      .json({ token: token, user_id: user.id, username: user.username });
   } catch (err) {
     res.status(500).json({ message: err });
   }
