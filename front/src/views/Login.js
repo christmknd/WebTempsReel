@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const login = async () => {
     const url = process.env.REACT_APP_API_BACK + ":8001/users/login";
@@ -25,10 +27,14 @@ const Login = () => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("userId", data.user_id);
       localStorage.setItem("username", data.username);
+      window.location.href = "/";
+    }
+
+    if (response.status !== 200) {
+      setError("invalid username or password");
     }
 
     // redirecting the user to the home page
-    window.location.href = "/";
 
     console.log("login data", data);
   };
@@ -78,7 +84,7 @@ const Login = () => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             style={{
-              padding: "10px",
+              padding: "20px",
               margin: "10px",
               width: "300px",
               fontSize: "20px",
@@ -93,7 +99,7 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             style={{
-              padding: "10px",
+              padding: "20px",
               margin: "10px",
               width: "300px",
               fontSize: "20px",
@@ -106,7 +112,7 @@ const Login = () => {
         <button
           onClick={login}
           style={{
-            padding: "10px",
+            padding: "20px",
             margin: "10px",
             width: "300px",
             fontSize: "20px",
@@ -120,6 +126,32 @@ const Login = () => {
         >
           Login
         </button>
+        <div
+          style={{
+            marginTop: "10px",
+          }}
+        >
+          if you don't have an account, you can{" "}
+          <Link
+            to="/signup"
+            style={{
+              color: "#4584F0",
+              textDecoration: "none",
+              cursor: "pointer",
+            }}
+          >
+            Sign up
+          </Link>
+        </div>
+      </div>
+      <div
+        style={{
+          marginTop: "15px",
+          color: "red",
+          height: "20px",
+        }}
+      >
+        {error}
       </div>
     </div>
   );

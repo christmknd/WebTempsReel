@@ -6,23 +6,41 @@ import WSTest from "../components/WSTest";
 import PageNotFound from "../views/PageNotFound";
 import Login from "../views/Login";
 import Signup from "../views/Signup";
+import ProtectedRoute from "../components/ProtectedRoute";
+import Logout from "../views/Logout";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: (
+      <ProtectedRoute>
+        <Home />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/service-client",
-    element: <ServiceClient />,
+    element: (
+      <ProtectedRoute>
+        <ServiceClient />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/chatroom",
-    element: <ChatRoom />,
+    element: (
+      <ProtectedRoute>
+        <ChatRoom />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/websocket",
-    element: <WSTest />,
+    element: (
+      <ProtectedRoute>
+        <WSTest />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/login",
@@ -31,6 +49,10 @@ export const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/logout",
+    element: <Logout />,
   },
   {
     path: "*",
