@@ -41,7 +41,6 @@ function getNextWeekDays(weekNumber = 2) {
 
 function removeTakenSlots(appointments, freeSlots) {
   appointments.forEach((appointment) => {
-    // console.log(appointment)
     if (appointment.status !== "Annulé") {
       const index = freeSlots[appointment.type].indexOf(appointment.date);
       if (index > -1) {

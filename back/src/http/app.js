@@ -7,7 +7,6 @@ require('dotenv').config()
 
 const userRouter = require("./user/user.routes.js");
 const appointmentRouter = require('./appointment/appointment.routes.js');
-console.log(getFreeSLots())
 
 const app = express();
 
