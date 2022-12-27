@@ -1,5 +1,6 @@
 const db = require("../database");
 const User = db.users;
+const Appointment = require("../appointment/appointment.model");
 
 async function findAll() {
   const reponse = await User.findAll();
