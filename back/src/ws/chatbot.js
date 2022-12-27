@@ -1,20 +1,25 @@
+const { getFreeSLots } = require("../utils");
+const appointmentService = require("../http/appointment/appointment.service");
+
 module.exports = (io, socket) => {
   const initQuestions = () => {
     socket.emit("chatbot:questions", types_aide);
   };
-
   const responseQuestions = (id) => {
     if (id === 1) {
       socket.emit("chatbot:questions", [
         { id: 11, text: "Date du dernier entretien de la moto" },
       ]);
     } else if (id === 12) {
-      socket.emit("chatbot:questions", [
-        {
-          id: 121,
-          text: "disponibilité pour la semaine en cours TODO",
-        },
-      ]);
+      getFreeSLots().then((slots) => {
+        const propositions = slots["Entretien"].map((date) => {
+          return {
+            id: "overhaul_apt_" + date,
+            text: date,
+          };
+        });
+        socket.emit("chatbot:questions", propositions);
+      });
     } else if (id === 13) {
       socket.emit("chatbot:questions", [
         {
@@ -36,7 +41,27 @@ module.exports = (io, socket) => {
     } else if (id === 2) {
       socket.emit("chatbot:questions", types_usage);
     } else if (id === 21 || id === 22 || id === 23) {
-      socket.emit("chatbot:questions", [{ id: 20, text: "Proposition RDV TODO" }]);
+      getFreeSLots().then((slots) => {
+        // console.log(slots);
+        let type = "";
+        switch (id) {
+          case 21:
+            type = "Routier";
+            break;
+          case 22:
+            type = "Tout-Terrain";
+            break;
+          case 23:
+            type = "Sportif";
+        }
+        const propositions = slots[type].map((date) => {
+          return {
+            id: "information_apt_" + type + "_" + date,
+            text: date,
+          };
+        });
+        socket.emit("chatbot:questions", propositions);
+      });
     } else if (id === 3) {
       socket.emit("chatbot:questions", infos_contact);
     } else if (id === 31) {
@@ -53,11 +78,32 @@ module.exports = (io, socket) => {
           text: types_aide.slice(-1),
         });
       }, 1000);
-    } else
+    }
+    ///// APPOINTMENT PART ///////
+    else if (id.includes("information_apt")) {
+      appointmentService.create({
+        type: id.split("_")[2],
+        date: id.split("_")[3],
+      });
+      socket.emit("chatbot:close", {
+        id: 01,
+        text: "Votre rendez-vous a bien été pris. Merci et au revoir !",
+      });
+    } else if (id.includes("overhaul_apt")) {
+      appointmentService.create({
+        type: "Entretien",
+        date: id.split("_")[2],
+      });
+      socket.emit("chatbot:close", {
+        id: 01,
+        text: "Votre rendez-vous a bien été pris. Merci et au revoir !",
+      });
+    } else {
       socket.emit("chatbot:close", {
         id: 01,
         text: "Merci et au revoir !",
       });
+    }
   };
   socket.on("chatbot:questions", initQuestions);
   socket.on("chatbot:reponses", responseQuestions);

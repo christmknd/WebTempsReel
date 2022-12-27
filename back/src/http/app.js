@@ -1,10 +1,13 @@
 const express = require('express');
 const cors = require("cors");
 const db = require("./database.js");
+const { getFreeSLots } = require('../utils.js');
 
 require('dotenv').config()
 
 const userRouter = require("./user/user.routes.js");
+const appointmentRouter = require('./appointment/appointment.routes.js');
+console.log(getFreeSLots())
 
 const app = express();
 
@@ -30,5 +33,6 @@ app.get('/message', (req, res) => {
 });
 
 app.use('/users', userRouter);
+app.use("/appointments", appointmentRouter);
 
 module.exports = app;
