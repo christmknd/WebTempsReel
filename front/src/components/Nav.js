@@ -16,6 +16,9 @@ function Nav() {
         <li>
           <Link to={`/websocket`}>Test Websocket</Link>
         </li>
+        <li>
+          <Link to={`/logout`}>Logout</Link>
+        </li>
       </ul>
     </nav>
   );
