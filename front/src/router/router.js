@@ -4,7 +4,8 @@ import ChatRoom from "../views/ChatRoom";
 import ServiceClient from "../views/ServiceClient";
 import WSTest from "../components/WSTest";
 import PageNotFound from "../views/PageNotFound";
-
+import Login from "../views/Login";
+import Signup from "../views/Signup";
 
 export const router = createBrowserRouter([
   {
@@ -24,8 +25,15 @@ export const router = createBrowserRouter([
     element: <WSTest />,
   },
   {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+  },
+  {
     path: "*",
-    element: <PageNotFound/>
-  }
-  
+    element: <PageNotFound />,
+  },
 ]);
