@@ -12,9 +12,9 @@ const Signup = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username: "user4",
-        password: "user4",
-        firstname: "fourth",
+        username: "user6",
+        password: "user6",
+        firstname: "fifth",
         lastname: "user",
       }),
     });
