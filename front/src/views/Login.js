@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Login = () => {
@@ -26,8 +26,13 @@ const Login = () => {
     if (data.token) {
       localStorage.setItem("token", data.token);
       localStorage.setItem("userId", data.user_id);
+      localStorage.setItem("role", data.role);
       localStorage.setItem("username", data.username);
-      window.location.href = "/";
+      if (data.role === "admin") {
+        window.location.href = "/admin";
+      } else {
+        window.location.href = "/";
+      }
     }
 
     if (response.status !== 200) {

@@ -19,10 +19,18 @@ async function login(req, res) {
     if (!validPassword) {
       return res.status(400).json({ message: "Invalid password" });
     }
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET
+    );
     return res
       .status(200)
-      .json({ token: token, user_id: user.id, username: user.username });
+      .json({
+        token: token,
+        user_id: user.id,
+        username: user.username,
+        role: user.role,
+      });
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -52,15 +60,17 @@ async function signup(req, res) {
       password: hashedPassword,
       role,
     });
-    const token = jwt.sign({ id: savedUser.id }, process.env.JWT_SECRET);
-    return res
-      .status(200)
-      .json({
-        message: "User created successfully",
-        user_id: savedUser.id,
-        token: token,
-        username: savedUser.username,
-      });
+    const token = jwt.sign(
+      { id: savedUser.id, role: savedUser.role },
+      process.env.JWT_SECRET
+    );
+    return res.status(200).json({
+      message: "User created successfully",
+      user_id: savedUser.id,
+      token: token,
+      username: savedUser.username,
+      role: savedUser.role,
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message_brr: err });

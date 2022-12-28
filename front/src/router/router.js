@@ -1,46 +1,70 @@
-import { createBrowserRouter } from "react-router-dom";
-import Home from "../views/Home";
-import ChatRoom from "../views/ChatRoom";
-import ServiceClient from "../views/ServiceClient";
-import WSTest from "../components/WSTest";
-import PageNotFound from "../views/PageNotFound";
+import { createBrowserRouter, redirect } from "react-router-dom";
+
+// Unconnected
 import Login from "../views/Login";
 import Signup from "../views/Signup";
-import ProtectedRoute from "../components/ProtectedRoute";
 import Logout from "../views/Logout";
+import PageNotFound from "../views/PageNotFound";
+
+// User
+import Home from "../views/user/Home";
+import UserApp from "../views/user/UserApp";
+import ChatRoom from "../views/user/ChatRoom";
+import ServiceClient from "../views/user/ServiceClient";
+import WSTest from "../components/WSTest";
+
+// Admin
+import AdminApp from "../views/admin/AdminApp";
+import SavAdmin from "../views/admin/SavAdmin";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <ProtectedRoute>
-        <Home />
-      </ProtectedRoute>
-    ),
+    element: <UserApp />,
+    errorElement: <PageNotFound />,
+    loader: () => {
+      if (localStorage.getItem("role") !== "user") throw redirect("/login");
+    },
+    children: [
+      {
+        path: "",
+        element: <Home />,
+      },
+      {
+        path: "websocket",
+        element: <WSTest />,
+      },
+      {
+        path: "service-client",
+        element: <ServiceClient />,
+      },
+      {
+        path: "chatroom",
+        element: <ChatRoom />,
+      },
+    ],
   },
   {
-    path: "/service-client",
-    element: (
-      <ProtectedRoute>
-        <ServiceClient />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: "/chatroom",
-    element: (
-      <ProtectedRoute>
-        <ChatRoom />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: "/websocket",
-    element: (
-      <ProtectedRoute>
-        <WSTest />
-      </ProtectedRoute>
-    ),
+    path: "/admin",
+    element: <AdminApp />,
+    errorElement: <PageNotFound />,
+    loader: () => {
+      if (localStorage.getItem("role") !== "admin") throw redirect("/login");
+    },
+    children: [
+      {
+        path: "",
+        element: <Home />,
+      },
+      {
+        path: "sav-admin",
+        element: <SavAdmin />,
+      },
+      {
+        path: "logout",
+        element: <Logout />,
+      },
+    ],
   },
   {
     path: "/login",
@@ -57,5 +81,8 @@ export const router = createBrowserRouter([
   {
     path: "*",
     element: <PageNotFound />,
+    loader: () => {
+      throw redirect("/login");
+    },
   },
 ]);

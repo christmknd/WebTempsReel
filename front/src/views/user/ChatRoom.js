@@ -1,7 +1,6 @@
 import { useState } from "react";
-import Chat from "../components/Chat/Chat";
-import ListUsers from "../components/Chat/ListUsers";
-import Nav from "../components/Nav";
+import Chat from "../../components/Chat/Chat";
+import ListUsers from "../../components/Chat/ListUsers";
 
 function ChatRoom() {
   const [idUserSelected, setIdUserSelected] = useState("");
@@ -12,7 +11,6 @@ function ChatRoom() {
 
   return (
     <div className="ChatRoom">
-      <Nav />
       <h1>ChatRoom</h1>
       <ListUsers selectUser={selectUser} />
       <Chat id={idUserSelected} />
