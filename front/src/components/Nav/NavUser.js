@@ -14,6 +14,9 @@ function NavUser() {
           <Link to="chatroom">ChatRoom</Link>
         </li>
         <li>
+          <Link to="private-chat">Private Chat</Link>
+        </li>
+        <li>
           <Link to="websocket">Test Websocket</Link>
         </li>
         <li>

@@ -22,6 +22,7 @@ const Signup = () => {
         password: password,
         firstname: firstname,
         lastname: lastname,
+        role: "user",
       }),
     });
 

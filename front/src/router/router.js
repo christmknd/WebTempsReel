@@ -16,7 +16,7 @@ import WSTest from "../components/WSTest";
 // Admin
 import AdminApp from "../views/admin/AdminApp";
 import SavAdmin from "../views/admin/SavAdmin";
-import Chat from "../views/Chat";
+import Chat from "../views/PrivateChat";
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +43,10 @@ export const router = createBrowserRouter([
         path: "chatroom",
         element: <ChatRoom />,
       },
+      {
+        path: "private-chat",
+        element: <Chat />,
+      },
     ],
   },
   {
@@ -67,14 +71,14 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "/chat",
-    element: (
-      <ProtectedRoute>
-        <Chat />
-      </ProtectedRoute>
-    ),
-  },
+  // {
+  //   path: "/chat",
+  //   element: (
+  //     <ProtectedRoute>
+  //       <Chat />
+  //     </ProtectedRoute>
+  //   ),
+  // },
   {
     path: "/login",
     element: <Login />,

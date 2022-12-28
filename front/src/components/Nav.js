@@ -14,7 +14,7 @@ function Nav() {
           <Link to={`/chatroom`}>ChatRoom</Link>
         </li>
         <li>
-          <Link to={`/chat`}>Chat</Link>
+          <Link to={`/private-chat`}>Private Chat</Link>
         </li>
         <li>
           <Link to={`/websocket`}>Test Websocket</Link>

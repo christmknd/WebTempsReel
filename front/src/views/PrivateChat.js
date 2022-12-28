@@ -2,7 +2,7 @@ import { useState } from "react";
 import io from "socket.io-client";
 import Nav from "../components/Nav";
 
-const Chat = (props) => {
+const PrivateChat = (props) => {
   const urlWS = `${process.env.REACT_APP_WS_BACK}:${process.env.REACT_APP_PORT_BACKEND}`;
   const socket = io(urlWS);
   const [message, setMessage] = useState("");
@@ -28,7 +28,6 @@ const Chat = (props) => {
 
   return (
     <div>
-      <Nav />
       <h1> Chatroom </h1>;
       <input value={message} onChange={(e) => setMessage(e.target.value)} />
       <button onClick={sendMessage}>send message</button>
@@ -36,4 +35,4 @@ const Chat = (props) => {
   );
 };
 
-export default Chat;
+export default PrivateChat;
