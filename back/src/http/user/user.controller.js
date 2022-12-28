@@ -19,7 +19,10 @@ async function login(req, res) {
     if (!validPassword) {
       return res.status(400).json({ message: "Invalid password" });
     }
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign(
+      { id: user._id, username: user.username },
+      process.env.JWT_SECRET
+    );
     return res
       .status(200)
       .json({ token: token, user_id: user.id, username: user.username });
@@ -52,32 +55,21 @@ async function signup(req, res) {
       password: hashedPassword,
       role,
     });
-    const token = jwt.sign({ id: savedUser.id }, process.env.JWT_SECRET);
-    return res
-      .status(200)
-      .json({
-        message: "User created successfully",
-        user_id: savedUser.id,
-        token: token,
-        username: savedUser.username,
-      });
+    const token = jwt.sign(
+      { id: savedUser._id, username: savedUser.username },
+      process.env.JWT_SECRET
+    );
+    return res.status(200).json({
+      message: "User created successfully",
+      user_id: savedUser.id,
+      token: token,
+      username: savedUser.username,
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message_brr: err });
   }
 }
-
-// async function signup(req, res) {
-//   // try {
-//   const { username, password, firstname, lastname, role } = req.body;
-//   // return all users
-//   const users = await userService.findAll();
-//   return res.status(200).json({ users });
-//   // } catch (err) {
-//   //   console.log(err);
-//   //   res.status(500).json({ message_brr: err });
-//   // }
-// }
 
 function addUser(req, res) {
   let user = req.body;

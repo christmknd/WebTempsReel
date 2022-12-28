@@ -8,6 +8,7 @@ import Login from "../views/Login";
 import Signup from "../views/Signup";
 import ProtectedRoute from "../components/ProtectedRoute";
 import Logout from "../views/Logout";
+import Chat from "../views/Chat";
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +40,14 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <WSTest />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/chat",
+    element: (
+      <ProtectedRoute>
+        <Chat />
       </ProtectedRoute>
     ),
   },
