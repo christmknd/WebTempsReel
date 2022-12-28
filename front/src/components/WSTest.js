@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Nav from "../components/Nav";
 
 import io from "socket.io-client";
 
@@ -25,7 +24,6 @@ function WSTest() {
 
   return (
     <div className="WSTest">
-      <Nav />
       <p id="MyIDSocket"></p>
       {`You receive ${message} message`}
       <script src="/socket.io/socket.io.js"></script>

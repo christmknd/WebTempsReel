@@ -31,7 +31,11 @@ const Signup = () => {
       localStorage.setItem("userId", responseData.user_id);
       localStorage.setItem("role", responseData.role);
       localStorage.setItem("username", responseData.username);
-      window.location.href = "/";
+      if (responseData.role === "admin") {
+        window.location.href = "/admin";
+      } else {
+        window.location.href = "/";
+      }
     }
 
     if (response.status !== 200) {

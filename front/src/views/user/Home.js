@@ -1,9 +1,7 @@
 import { useEffect } from "react";
-import Nav from "../components/Nav";
 
 function Home() {
   const loadData = async () => {
-    console.log("lol");
     const url = process.env.REACT_APP_API_BACK + ":8001/";
     const response = await fetch(url, {
       method: "GET",
@@ -17,7 +15,6 @@ function Home() {
     });
     const data = await response.json();
     console.log("login data", data);
-    console.log("lol end");
   };
 
   useEffect(() => {
@@ -25,7 +22,6 @@ function Home() {
   }, []);
   return (
     <div className="Home">
-      <Nav />
       <h1>Home</h1>
     </div>
   );
