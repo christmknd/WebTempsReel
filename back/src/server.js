@@ -36,14 +36,20 @@ const io = new Server(server, {
  */
 
 server.listen(port);
+console.log("port is", port);
 server.on("error", onError);
 server.on("listening", onListening);
 
 const registerChatbotHandlers = require("./ws/chatbot");
 const registerSavHandlers = require("./ws/sav");
+const registerPrivateChatHandlers = require("./ws/privateChat");
+const getUser = require("./ws/auth.js");
+const userService = require("./http/user/user.service.js");
 
 const onConnectionClient = (socket) => {
   console.log(`user connected ${socket.id}`);
+
+  registerPrivateChatHandlers(io, socket);
   registerChatbotHandlers(io, socket);
   registerSavHandlers(io, socket);
   socket.on("disconnect", () => {

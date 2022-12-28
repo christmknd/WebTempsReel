@@ -20,17 +20,16 @@ async function login(req, res) {
       return res.status(400).json({ message: "Invalid password" });
     }
     const token = jwt.sign(
-      { id: user._id, role: user.role },
+      { id: user._id, username: user.username, role: user.role },
+
       process.env.JWT_SECRET
     );
-    return res
-      .status(200)
-      .json({
-        token: token,
-        user_id: user.id,
-        username: user.username,
-        role: user.role,
-      });
+    return res.status(200).json({
+      token: token,
+      user_id: user.id,
+      username: user.username,
+      role: user.role,
+    });
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -61,7 +60,7 @@ async function signup(req, res) {
       role,
     });
     const token = jwt.sign(
-      { id: savedUser.id, role: savedUser.role },
+      { id: savedUser._id, username: savedUser.username, role: savedUser.role },
       process.env.JWT_SECRET
     );
     return res.status(200).json({
@@ -76,18 +75,6 @@ async function signup(req, res) {
     res.status(500).json({ message_brr: err });
   }
 }
-
-// async function signup(req, res) {
-//   // try {
-//   const { username, password, firstname, lastname, role } = req.body;
-//   // return all users
-//   const users = await userService.findAll();
-//   return res.status(200).json({ users });
-//   // } catch (err) {
-//   //   console.log(err);
-//   //   res.status(500).json({ message_brr: err });
-//   // }
-// }
 
 function addUser(req, res) {
   let user = req.body;
