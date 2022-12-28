@@ -80,7 +80,7 @@ module.exports = (io, socket) => {
       }, 1000);
     }
     ///// APPOINTMENT PART ///////
-    else if (id.includes("information_apt")) {
+    else if (id && id.includes("information_apt")) {
       appointmentService.create({
         type: id.split("_")[2],
         date: id.split("_")[3],
@@ -89,7 +89,7 @@ module.exports = (io, socket) => {
         id: 01,
         text: "Votre rendez-vous a bien été pris. Merci et au revoir !",
       });
-    } else if (id.includes("overhaul_apt")) {
+    } else if (id && id.includes("overhaul_apt")) {
       appointmentService.create({
         type: "Entretien",
         date: id.split("_")[2],

@@ -35,6 +35,13 @@ function getNextWeekDays(weekNumber = 2) {
     date.setDate(date.getDate() + i-1);
     days.push(date.toISOString().split("T")[0]);
   }
+  //remove days that are already passed
+  for (let i = 0; i < days.length; i++) {
+    if (new Date(days[i]) < new Date()) {
+      days.splice(i, 1);
+      i--;
+    }
+  }
   days.splice(0, (weekNumber-1) * 7);
   return days;
 }
