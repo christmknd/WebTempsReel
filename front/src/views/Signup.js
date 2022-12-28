@@ -29,6 +29,7 @@ const Signup = () => {
     if (responseData.token) {
       localStorage.setItem("token", responseData.token);
       localStorage.setItem("userId", responseData.user_id);
+      localStorage.setItem("role", responseData.role);
       localStorage.setItem("username", responseData.username);
       window.location.href = "/";
     }

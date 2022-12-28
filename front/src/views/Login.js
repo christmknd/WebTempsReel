@@ -26,6 +26,7 @@ const Login = () => {
     if (data.token) {
       localStorage.setItem("token", data.token);
       localStorage.setItem("userId", data.user_id);
+      localStorage.setItem("role", data.role);
       localStorage.setItem("username", data.username);
       window.location.href = "/";
     }

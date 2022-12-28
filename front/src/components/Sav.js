@@ -6,7 +6,7 @@ const urlWS = `${process.env.REACT_APP_WS_BACK}:${process.env.REACT_APP_PORT_BAC
 const socket = io(urlWS);
 
 function Sav() {
-  const [dispo, setDispo] = useState(true);
+  const [dispo, setDispo] = useState(false);
   const [demandeSend, setDemandeSend] = useState(false);
   const [nbrClientAttente, setNbrClientAttente] = useState(0);
   const [chat, setChat] = useState(false);
