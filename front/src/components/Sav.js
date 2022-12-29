@@ -33,10 +33,11 @@ function Sav() {
     setNbrClientAttente(client_wait);
   });
 
-  socket.on("sav:accept", ({idAdmin}) => {
+  socket.on("sav:accept", ({ idAdmin }) => {
     setDemandeSend(false);
     setIdSAV(idAdmin);
     setChat(true);
+    socket.emit("sav:accept", localStorage.getItem("username"));
   });
 
   return (

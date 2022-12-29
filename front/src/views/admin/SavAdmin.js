@@ -23,9 +23,15 @@ function SavAdmin() {
     setIdClient(idUser);
   }
 
-  socket.on("sav:admin:demand", ({ user, number_wait }) => {
+  socket.on("sav:demand", (number_wait) => {
     setNumberWait(number_wait);
-    setUsers([...users, user]);
+  });
+
+  socket.on("sav:admin:demand", (user) => {
+    const user_delete = users.find((el) => el.id === user.id);
+    if (user_delete) {
+      setUsers(users.filter((el) => el.id !== user.id));
+    } else setUsers([...users, user]);
   });
 
   return (
