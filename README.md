@@ -1,6 +1,6 @@
 # Web Temps Reel
 
-2 methodes de travail
+Workflow
 
 - Docker-compose avec un volume pointant sur le dossier src
 
@@ -39,13 +39,13 @@ place d’un système d'échange instantané afin de renforcer sa communication 
 
 #### Role User
 
-[] Il est possible de demander à communiquer avec un conseiller de vente
+[x] Il est possible de demander à communiquer avec un conseiller de vente
 
-[] En cas de conseiller non-disponible, il n’est pas possible de demander à communiquer avec un conseiller de vente
+[x] En cas de conseiller non-disponible, il n’est pas possible de demander à communiquer avec un conseiller de vente
 
-[] Il est possible de communiquer avec un chatbot pour l’entretien d’une moto (voir workflow - Sujet.pdf)
+[x] Il est possible de communiquer avec un chatbot pour l’entretien d’une moto (voir workflow - Sujet.pdf)
 
-[] Il est possible de communiquer avec les autres clients
+[x] Il est possible de communiquer avec les autres clients
 
 [] Il est possible de rejoindre des salons de discussions prédéfinis par un administrateur
 
@@ -57,13 +57,13 @@ place d’un système d'échange instantané afin de renforcer sa communication 
 
 #### Role Admin
 
-[] Il est possible de voir les demandes de communication en attente
+[x] Il est possible de voir les demandes de communication en attente
 
 [] Il est possible de refuser une demande de communication
 
-[] Il est possible d’accepter une demande de communication
+[x] Il est possible d’accepter une demande de communication
 
-[] Il est possible de s’enregistrer comme étant disponible pour communiquer avec des clients
+[x] Il est possible de s’enregistrer comme étant disponible pour communiquer avec des clients
 
 [] Il est possible de créer un salon de discussion
 
