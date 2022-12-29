@@ -18,16 +18,14 @@ function Sav() {
 
   socket.on("sav:admin:count", (admins_online) => {
     if (admins_online > 0) {
-      console.log("Conseiller de vente disponible");
       setDispo(true);
     } else {
-      console.log("Conseiller de vente indisponible");
       setDispo(false);
     }
   });
 
   function demandeConseiller() {
-    socket.emit("sav:demand");
+    socket.emit("sav:demand", localStorage.getItem("username"));
     setDemandeSend(true);
   }
 
@@ -35,17 +33,19 @@ function Sav() {
     setNbrClientAttente(client_wait);
   });
 
-  // TODO
-  // socket.on("sav:accept", (idSAV) => {
-  //   console.log("Conseiller de vente accepte la communication");
-  //   setDemandeSend(false);
-  //   setIdSAV(idSAV);
-  //   setChat(true);
-  // });
+  socket.on("sav:accept", ({idAdmin}) => {
+    setDemandeSend(false);
+    setIdSAV(idAdmin);
+    setChat(true);
+  });
 
   return (
     <div className="Sav">
-      {!dispo && <p>Conseiller de vente indisponible pour le moment.</p>}
+      {!dispo ? (
+        <p>Conseiller de vente indisponible pour le moment.</p>
+      ) : (
+        <p>Conseiller de vente disponible !</p>
+      )}
       {!demandeSend && !chat && (
         <button disabled={dispo ? false : true} onClick={demandeConseiller}>
           Demande de communication avec un conseiller de vente
@@ -59,7 +59,7 @@ function Sav() {
           <p>Il y a {nbrClientAttente} demande(s) en attente</p>
         </>
       )}
-      {chat && <Chat id={idSAV} />}
+      {chat && <Chat id={idSAV} socket={socket} />}
     </div>
   );
 }
