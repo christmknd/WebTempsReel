@@ -1,9 +1,10 @@
 module.exports = (io, socket) => {
-  const demandSav = async () => {
+  const demandSav = async (username) => {
     socket.join("room_wait_sav");
     const sockets = await io.in("room_wait_sav").fetchSockets();
     socket.broadcast.emit("sav:demand", sockets.length);
     socket.emit("sav:demand", sockets.length);
+    socket.broadcast.emit("sav:admin:demand", { username, id: socket.id });
   };
 
   const onlineAdminSav = async () => {
@@ -11,19 +12,33 @@ module.exports = (io, socket) => {
     socket.emit("sav:admin:count", sockets.length);
   };
 
-  const newAdminOnlineSav = async () => {
+  const newAdminOnlineSav = async (online) => {
+    if (!online) {
+      socket.join("room_admin_online");
+    } else socket.leave("room_admin_online");
     const sockets = await io.in("room_admin_online").fetchSockets();
-    socket.broadcast.emit("sav:admin:new", sockets.length);
+    socket.broadcast.emit("sav:admin:count", sockets.length);
   };
 
-  // TODO
-  // const acceptSav = async (idAdmin) => {
-  //   socket.emit("return_demande_sav", idAdmin);
-  // };
+  const acceptSavAdmin = (idUser) => {
+    socket.to(idUser).emit("sav:accept", { idAdmin: socket.id });
+  };
+
+  const acceptSav = async (username) => {
+    socket.leave("room_wait_sav");
+    const sockets = await io.in("room_wait_sav").fetchSockets();
+    socket.broadcast.emit("sav:demand", sockets.length);
+    socket.broadcast.emit("sav:admin:demand", { username, id: socket.id });
+  };
+
+  const sendMessage = (idUserToSend, message) => {
+    socket.to(idUserToSend).emit("send:message", socket.id, message);
+  };
 
   socket.on("sav:demand", demandSav);
   socket.on("sav:admin:count", onlineAdminSav);
   socket.on("sav:admin:new", newAdminOnlineSav);
-  // TOOD
-  // socket.on("sav:accept", acceptSav);
+  socket.on("sav:admin:accept", acceptSavAdmin);
+  socket.on("sav:accept", acceptSav);
+  socket.on("send:message", sendMessage);
 };
