@@ -1,34 +1,40 @@
 module.exports = (io, socket) => {
-  const demandSav = async (username) => {
-    socket.join("room_wait_sav");
+  // Nouvelle demande User
+  // OU demande décliné
+  const demandSav = async (bool, username) => {
+    // Demande réalisé
+    if (bool) {
+      socket.join("room_wait_sav");
+    } // Demande décliné
+    else socket.leave("room_wait_sav");
     const sockets = await io.in("room_wait_sav").fetchSockets();
-    socket.broadcast.emit("sav:demand", sockets.length);
-    socket.emit("sav:demand", sockets.length);
-    socket.broadcast.emit("sav:admin:demand", { username, id: socket.id });
+    io.emit("sav:demand:count", sockets.length);
+    io.emit("sav:admin:demand:user", { username, id: socket.id });
   };
 
+  // Nombre Admin online
   const onlineAdminSav = async () => {
     const sockets = await io.in("room_admin_online").fetchSockets();
     socket.emit("sav:admin:count", sockets.length);
   };
 
+  // Nouveau Admin online
   const newAdminOnlineSav = async (online) => {
     if (!online) {
       socket.join("room_admin_online");
     } else socket.leave("room_admin_online");
     const sockets = await io.in("room_admin_online").fetchSockets();
-    socket.broadcast.emit("sav:admin:count", sockets.length);
+    io.emit("sav:admin:count", sockets.length);
   };
 
+  // Demande accepté par Admin
   const acceptSavAdmin = (idUser) => {
-    socket.to(idUser).emit("sav:accept", { idAdmin: socket.id });
+    socket.to(idUser).emit("sav:reponse", socket.id);
   };
 
-  const acceptSav = async (username) => {
-    socket.leave("room_wait_sav");
-    const sockets = await io.in("room_wait_sav").fetchSockets();
-    socket.broadcast.emit("sav:demand", sockets.length);
-    socket.broadcast.emit("sav:admin:demand", { username, id: socket.id });
+  // Demande décliné par Admin
+  const declineSavAdmin = (idUser) => {
+    socket.to(idUser).emit("sav:reponse");
   };
 
   const sendMessage = (idUserToSend, message) => {
@@ -39,6 +45,6 @@ module.exports = (io, socket) => {
   socket.on("sav:admin:count", onlineAdminSav);
   socket.on("sav:admin:new", newAdminOnlineSav);
   socket.on("sav:admin:accept", acceptSavAdmin);
-  socket.on("sav:accept", acceptSav);
+  socket.on("sav:admin:decline", declineSavAdmin);
   socket.on("send:message", sendMessage);
 };
