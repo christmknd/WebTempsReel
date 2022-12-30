@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const db = require("./database.js");
+const { EventEmitter } = require("events");
+
 const { getFreeSLots } = require("../utils.js");
 
 require("dotenv").config();
@@ -10,6 +12,10 @@ const userRouter = require("./user/user.routes.js");
 const isAuthenticated = require("./middlewares/auth.js");
 const appointmentRouter = require("./appointment/appointment.routes.js");
 const messageRouter = require("./Message/message.routes.js");
+const { text } = require("express");
+
+// SSE
+const usersEvent = new EventEmitter();
 
 const app = express();
 
@@ -28,6 +34,19 @@ db.sequelize
 
 app.get("/", isAuthenticated, (req, res) => {
   res.json("Hello world !");
+});
+
+app.post("/annonce-commerciale", (req, res) => {
+  usersEvent.emit("update", req.body.data);
+});
+
+app.get("/sse", (req, res) => {
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Connection", "keep-alive");
+  res.setHeader("Cache-Control", "no-cache");
+  usersEvent.on("update", (text) => {
+    res.write(`event: offrecommerciale\ndata: ${text}\n\n`);
+  });
 });
 
 app.use("/messages", messageRouter);

@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import io from "socket.io-client";
-import Nav from "../components/Nav";
 // geting username from query params
 import { useSearchParams, useOutletContext } from "react-router-dom";
 

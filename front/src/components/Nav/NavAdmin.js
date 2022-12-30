@@ -11,6 +11,9 @@ function NavAdmin() {
           <Link to="sav-admin">Service Client</Link>
         </li>
         <li>
+          <Link to="annonce-commerciale">Annonce Commerciale</Link>
+        </li>
+        <li>
           <Link to="logout">Logout</Link>
         </li>
       </ul>

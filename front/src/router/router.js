@@ -9,14 +9,13 @@ import PageNotFound from "../views/PageNotFound";
 // User
 import Home from "../views/user/Home";
 import UserApp from "../views/user/UserApp";
-import ChatRoom from "../views/user/ChatRoom";
 import ServiceClient from "../views/user/ServiceClient";
-import WSTest from "../components/WSTest";
 
 // Admin
 import AdminApp from "../views/admin/AdminApp";
 import SavAdmin from "../views/admin/SavAdmin";
 import Chat from "../views/PrivateChat";
+import AnnonceCommercial from "../views/admin/AnnonceCommercial";
 
 export const router = createBrowserRouter([
   {
@@ -56,6 +55,10 @@ export const router = createBrowserRouter([
       {
         path: "sav-admin",
         element: <SavAdmin />,
+      },
+      {
+        path: "annonce-commerciale",
+        element: <AnnonceCommercial />,
       },
       {
         path: "logout",
