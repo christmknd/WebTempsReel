@@ -53,13 +53,13 @@ place d’un système d'échange instantané afin de renforcer sa communication 
 
 [] Il n’est pas possible de communiquer sur un salon de discussion supprimé
 
-[] Il est possible de recevoir des notifications commerciales d’un administrateur
+[x] Il est possible de recevoir des notifications commerciales d’un administrateur
 
 #### Role Admin
 
 [x] Il est possible de voir les demandes de communication en attente
 
-[] Il est possible de refuser une demande de communication
+[x] Il est possible de refuser une demande de communication
 
 [x] Il est possible d’accepter une demande de communication
 
@@ -73,7 +73,7 @@ place d’un système d'échange instantané afin de renforcer sa communication 
 
 [] Il est possible de supprimer un salon de discussion
 
-[] Il est possible d'émettre des notifications commerciales
+[x] Il est possible d'émettre des notifications commerciales
 
 ### Contraintes techniques
 

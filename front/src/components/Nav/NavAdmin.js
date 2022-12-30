@@ -12,6 +12,7 @@ function NavAdmin() {
         </li>
         <li>
           <Link to="room-management">Room Management</Link>
+          <Link to="annonce-commerciale">Annonce Commerciale</Link>
         </li>
         <li>
           <Link to="logout">Logout</Link>

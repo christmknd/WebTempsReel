@@ -1,62 +1,29 @@
-import { useState, useEffect } from "react";
-import io from "socket.io-client";
+import { useState } from "react";
 import Chat from "../../components/Chat/Chat";
-
-const urlWS = `${process.env.REACT_APP_WS_BACK}:${process.env.REACT_APP_PORT_BACKEND}`;
-const socket = io(urlWS);
+import { useOutletContext } from "react-router-dom";
+import Dispo from "../../components/SavAdmin/Dispo";
+import Demands from "../../components/SavAdmin/Demands";
+import AdminsOnline from "../../components/SavAdmin/AdminsOnline";
 
 function SavAdmin() {
-  const [dispo, setDispo] = useState(false);
-  const [numberWait, setNumberWait] = useState(0);
-  const [users, setUsers] = useState([]);
   const [chat, setChat] = useState(false);
   const [idClient, setIdClient] = useState("");
 
-  function activDispo() {
-    socket.emit("sav:admin:new", dispo);
-    setDispo(!dispo);
-  }
+  // Recupere la connexion socket depuis le context de Outlet
+  const [socket] = useOutletContext();
 
-  function acceptDemand(idUser) {
-    socket.emit("sav:admin:accept", idUser);
+  function acceptDemand(user) {
+    socket.emit("sav:admin:accept", user.id);
     setChat(true);
-    setIdClient(idUser);
+    setIdClient(user.id);
   }
-
-  socket.on("sav:demand", (number_wait) => {
-    setNumberWait(number_wait);
-  });
-
-  socket.on("sav:admin:demand", (user) => {
-    const user_delete = users.find((el) => el.id === user.id);
-    if (user_delete) {
-      setUsers(users.filter((el) => el.id !== user.id));
-    } else setUsers([...users, user]);
-  });
 
   return (
     <div className="savAdmin">
-      <h1>savAdmin</h1>
-      {dispo ? (
-        <button style={{ color: "red" }} onClick={activDispo}>
-          Désactiver ma disponibilité
-        </button>
-      ) : (
-        <button style={{ color: "green" }} onClick={activDispo}>
-          Activer ma disponibilité
-        </button>
-      )}
-
-      {dispo ? <p>Je suis dispo</p> : <p>Je suis absent</p>}
-
-      <p>Il y a actuellement {numberWait} demande(s) en attente</p>
-      <ul>
-        {users.map((el) => (
-          <li>
-            <button onClick={() => acceptDemand(el.id)}>{el.username}</button>
-          </li>
-        ))}
-      </ul>
+      <h1>Service Client</h1>
+      <AdminsOnline />
+      <Dispo />
+      <Demands acceptDemand={acceptDemand} />
       {chat && <Chat id={idClient} socket={socket} />}
     </div>
   );

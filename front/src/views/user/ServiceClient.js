@@ -1,5 +1,5 @@
 import ChatBot from "../../components/ChatBot/ChatBot";
-import Sav from "../../components/Sav";
+import Sav from "../../components/Sav/Sav";
 
 function ServiceClient() {
   return (

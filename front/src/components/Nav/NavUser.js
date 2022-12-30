@@ -11,13 +11,7 @@ function NavUser() {
           <Link to="service-client">Service Client</Link>
         </li>
         <li>
-          <Link to="chatroom">ChatRoom</Link>
-        </li>
-        <li>
           <Link to="private-chat">Private Chat</Link>
-        </li>
-        <li>
-          <Link to="websocket">Test Websocket</Link>
         </li>
         <li>
           <Link to="logout">Logout</Link>

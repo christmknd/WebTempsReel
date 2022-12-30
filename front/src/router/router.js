@@ -9,9 +9,7 @@ import PageNotFound from "../views/PageNotFound";
 // User
 import Home from "../views/user/Home";
 import UserApp from "../views/user/UserApp";
-import ChatRoom from "../views/user/ChatRoom";
 import ServiceClient from "../views/user/ServiceClient";
-import WSTest from "../components/WSTest";
 
 // Admin
 import AdminApp from "../views/admin/AdminApp";
@@ -33,16 +31,8 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "websocket",
-        element: <WSTest />,
-      },
-      {
         path: "service-client",
         element: <ServiceClient />,
-      },
-      {
-        path: "chatroom",
-        element: <ChatRoom />,
       },
       {
         path: "private-chat",
@@ -65,6 +55,10 @@ export const router = createBrowserRouter([
       {
         path: "sav-admin",
         element: <SavAdmin />,
+      },
+      {
+        path: "annonce-commerciale",
+        element: <AnnonceCommercial />,
       },
       {
         path: "logout",
