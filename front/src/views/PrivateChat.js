@@ -1,40 +1,19 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import io from "socket.io-client";
 // geting username from query params
 import { useSearchParams, useOutletContext } from "react-router-dom";
-
 
 const urlWS = `${process.env.REACT_APP_WS_BACK}:${process.env.REACT_APP_PORT_BACKEND}`;
 const socket = io(urlWS);
 const PrivateChat = () => {
   const [message, setMessage] = useState("");
   const [users, setUsers] = useState([]);
-  const [currentUser, setCurrentUser] = useState({});
   const [messages, setMessages] = useState([]);
   const [queryParameters] = useSearchParams();
   const receiver = queryParameters.get("user");
+  const [notmoving, setNotmoving] = useState(false);
 
   const [socket] = useOutletContext();
-
-
-  console.log("Params ", queryParameters);
-
-  console.log("once");
-  socket.on("connect", () => {
-    socket.on("disconnect", () => {});
-  });
-
-  socket.on("new-private-message", (data) => {
-    if (data) {
-      if (messages && messages.length === 0) {
-        // push to messages
-        setMessages([data]);
-      } else if (messages && data?.id !== messages[messages.length - 1].id) {
-        console.log("push to messages");
-        setMessages(messages.push(data));
-      }
-    }
-  });
 
   socket.emit("private-chat", {
     token: localStorage.getItem("token"),
@@ -67,6 +46,14 @@ const PrivateChat = () => {
   useEffect(() => {
     loadUserList();
   }, []);
+
+  useEffect(() => {
+    socket.on("new-private-message", (data) => {
+      if (data) {
+        setMessages((messages) => [...messages, data]);
+      }
+    });
+  }, [notmoving]);
 
   const sendMessage = () => {
     socket.emit("private-message", {
@@ -195,51 +182,55 @@ const PrivateChat = () => {
                 paddingLeft: "100px",
               }}
             >
-              {messages?.map((message) => (
-                <>
-                  <div
-                    style={{
-                      display: "flex",
-                      width: "90%",
-                      justifyContent:
-                        message.sender === localStorage.getItem("username")
-                          ? "flex-start"
-                          : "flex-end",
-                    }}
-                  >
-                    <div>
-                      <span
-                        style={{
-                          fontWeight: "bold",
-                          color: "#000",
-                          marginBottom: "10px",
-                        }}
-                      >
-                        {message.sender === localStorage.getItem("username")
-                          ? "you"
-                          : message.sender}
-                      </span>
+              {messages?.map(
+                (message, index) =>
+                  index % 2 === 0 && (
+                    <>
                       <div
                         style={{
-                          backgroundColor:
+                          display: "flex",
+                          width: "90%",
+                          justifyContent:
                             message.sender === localStorage.getItem("username")
-                              ? "#1474E5"
-                              : "#999",
-                          borderRadius: "40px",
-                          padding: "10px",
-                          width: "fit-content",
-                          maxWidth: "60%",
-                          marginBottom: "10px",
-                          marginTop: "7px",
-                          color: "white",
+                              ? "flex-start"
+                              : "flex-end",
                         }}
                       >
-                        {message.content}
+                        <div>
+                          <span
+                            style={{
+                              fontWeight: "bold",
+                              color: "#000",
+                              marginBottom: "10px",
+                            }}
+                          >
+                            {message.sender === localStorage.getItem("username")
+                              ? "you"
+                              : message.sender}
+                          </span>
+                          <div
+                            style={{
+                              backgroundColor:
+                                message.sender ===
+                                localStorage.getItem("username")
+                                  ? "#1474E5"
+                                  : "#999",
+                              borderRadius: "40px",
+                              padding: "10px",
+                              width: "fit-content",
+                              maxWidth: "60%",
+                              marginBottom: "10px",
+                              marginTop: "7px",
+                              color: "white",
+                            }}
+                          >
+                            {message.content}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </>
-              ))}
+                    </>
+                  )
+              )}
             </div>
 
             <div
