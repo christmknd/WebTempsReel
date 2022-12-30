@@ -2,7 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import io from "socket.io-client";
 import Nav from "../components/Nav";
 // geting username from query params
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useOutletContext } from "react-router-dom";
+
 
 const urlWS = `${process.env.REACT_APP_WS_BACK}:${process.env.REACT_APP_PORT_BACKEND}`;
 const socket = io(urlWS);
@@ -13,7 +14,9 @@ const PrivateChat = () => {
   const [messages, setMessages] = useState([]);
   const [queryParameters] = useSearchParams();
   const receiver = queryParameters.get("user");
-  console.log("oooooo");
+
+  const [socket] = useOutletContext();
+
 
   console.log("Params ", queryParameters);
 

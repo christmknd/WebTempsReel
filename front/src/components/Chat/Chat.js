@@ -33,16 +33,25 @@ function Chat(props) {
   });
 
   return (
-    <div style={{ border: "solid", overflow: "scroll", height: "300px" }}>
+    <div
+      style={{
+        border: "solid",
+        overflow: "scroll",
+        height: "300px",
+        margin: "10px",
+        padding: "10px",
+      }}
+    >
       <ul
         style={{
           listStyle: "none",
         }}
       >
         {messages.map((el) => (
-          <li style={{ background: "grey" }} key={el.id}>
-            <p>{el.name}</p>
-            <p>{el.text}</p>
+          <li style={{ border: "solid" }} key={el.id}>
+            <p>
+              {el.name} - {el.text}
+            </p>
             <p>{el.time}</p>
           </li>
         ))}

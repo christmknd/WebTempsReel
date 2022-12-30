@@ -32,16 +32,8 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "websocket",
-        element: <WSTest />,
-      },
-      {
         path: "service-client",
         element: <ServiceClient />,
-      },
-      {
-        path: "chatroom",
-        element: <ChatRoom />,
       },
       {
         path: "private-chat",

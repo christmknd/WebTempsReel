@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import io from "socket.io-client";
 import FormDateEntretien from "./FormDateEntretien";
 import FormNbrKlm from "./FormNbrKlm";
-
-const urlWS = `${process.env.REACT_APP_WS_BACK}:${process.env.REACT_APP_PORT_BACKEND}`;
-const socket = io(urlWS);
+import { useOutletContext } from "react-router-dom";
 
 function ChatBot() {
   const [messages, setMessages] = useState([]);
@@ -12,6 +9,9 @@ function ChatBot() {
   const [activeChat, setActiveChat] = useState(false);
   const [input, setInput] = useState("");
   const [upChatBot, setUpChatBot] = useState(false);
+
+  // Recupere la connexion socket depuis le context de Outlet
+  const [socket] = useOutletContext();
 
   // connect WS
   socket.on("connect", () => {
@@ -76,7 +76,10 @@ function ChatBot() {
   }
 
   return (
-    <div className="ChatBot" style={{ border: "solid" }}>
+    <div
+      className="ChatBot"
+      style={{ border: "solid", margin: "10px", padding: "10px" }}
+    >
       {activeChat ? (
         <ul>
           {messages.map((el, i) => (
