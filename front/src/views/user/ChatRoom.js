@@ -9,6 +9,7 @@ const ChatRoom = () => {
   const [rooms, setRooms] = useState([]);
   const [messages, setMessages] = useState([]);
   const [activeRoom, setActiveRoom] = useState(null);
+  const [inputDisabled, setInputDisabled] = useState(false);
 
   const updateMessages = (newMessage) => {
     setMessages((messages) => [...messages, newMessage]);
@@ -77,10 +78,12 @@ const ChatRoom = () => {
 
     socket.on("room-delete", () => {
       setMessages((messages) => [...messages, { action: "delete" }]);
+      setInputDisabled(true);
       setTimeout(() => {
         setMessages([]);
         setActiveRoom(null);
-      }, 3000);
+        setInputDisabled(false);
+      }, 5000);
     });
   }, []);
 
@@ -264,6 +267,7 @@ const ChatRoom = () => {
                     value={message}
                     placeholder="Type a message"
                     onChange={(e) => setMessage(e.target.value)}
+                    disabled={inputDisabled}
                     style={{
                       borderRadius: "40px",
                       border: "none",

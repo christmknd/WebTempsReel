@@ -30,12 +30,12 @@ function RoomManagement() {
     setNewRoomNameInput("");
     setNewRoomMaxUsersInput(2);
     setSelectedRoom(null);
-  }
+  };
 
   const deleteRoom = (roomName) => {
     socket.emit("delete-room", selectedRoom.name);
     setSelectedRoom(null);
-  }
+  };
 
   const toggleSelectedRoom = (roomName) => {
     const room = rooms.find((room) => room.name === roomName);
@@ -54,11 +54,12 @@ function RoomManagement() {
   }, []);
 
   return (
-    <div className="roomManagement">
+    <div className="roomManagement" style={{marginLeft:"20px"}}>
       <h1>Room Management</h1>
       <div>
         <div>
-          <h2>Rooms</h2>
+          <h2 style={{marginBottom:"-4px"}}>Rooms</h2>
+          <div style={{color:"gray",fontStyle:"italic",marginBottom:"20px"}}>Click on a room to toggle update options</div>
           {rooms?.map((room) => (
             <>
               <button
@@ -77,14 +78,18 @@ function RoomManagement() {
         </div>
         {selectedRoom && (
           <div id="selectedRoomOptions">
-            <h2>Room options</h2>
-            <div id="updateName">
+            <h2>Update room</h2>
+            <div>
+              <label style={{ marginRight: "4px" }}>Room name: </label>
               <input
                 type="text"
                 placeholder="New room name"
                 value={newRoomNameInput}
                 onChange={(e) => setNewRoomNameInput(e.target.value)}
               />
+            </div>
+            <div>
+              <label style={{ marginRight: "4px" }}>Maximum Users: </label>
               <input
                 type="number"
                 placeholder="Max users"
@@ -92,12 +97,12 @@ function RoomManagement() {
                 onChange={(e) => setNewRoomMaxUsersInput(e.target.value)}
                 style={{ width: "50px" }}
               />
-              <button onClick={() => updateRoom()}>Update</button>
             </div>
+            <button style={{ marginTop: "10px" }} onClick={() => updateRoom()}>Update</button>
             <div id="deleteRoom" style={{ marginTop: "3px" }}>
               <button
                 onClick={() => deleteRoom()}
-                style={{ backgroundColor: "firebrick", color: "white" }}
+                style={{ backgroundColor: "firebrick", color: "white", marginTop:"3px" }}
               >
                 Delete
               </button>
@@ -106,23 +111,33 @@ function RoomManagement() {
         )}
       </div>
 
-      <div>
+      {!selectedRoom && (
+        <div>
         <h2 className="text-white">Create Room</h2>
-        <input
-          type="text"
-          placeholder="Room name"
-          value={roomNameInput}
-          onChange={(e) => setRoomNameInput(e.target.value)}
-        />
-        <input
-          type="number"
-          placeholder="Max users"
-          value={roomMaxUsersInput}
-          onChange={(e) => setRoomMaxUsersInput(e.target.value)}
-          style={{ width: "50px" }}
-        />
-        <button onClick={() => addRoom()}>Create</button>
+        <div>
+          <label style={{ marginRight: "4px" }}>Room name: </label>
+          <input
+            type="text"
+            placeholder="Room name"
+            value={roomNameInput}
+            onChange={(e) => setRoomNameInput(e.target.value)}
+          />
+        </div>
+        <div>
+          <label style={{ marginRight: "4px" }}>Maximum Users: </label>
+          <input
+            type="number"
+            placeholder="Max users"
+            value={roomMaxUsersInput}
+            onChange={(e) => setRoomMaxUsersInput(e.target.value)}
+            style={{ width: "50px" }}
+          />
+        </div>
+        <button style={{ marginTop: "10px" }} onClick={() => addRoom()}>
+          Create
+        </button>
       </div>
+      )}
     </div>
   );
 }
