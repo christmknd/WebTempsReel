@@ -17,6 +17,7 @@ import WSTest from "../components/WSTest";
 import AdminApp from "../views/admin/AdminApp";
 import SavAdmin from "../views/admin/SavAdmin";
 import Chat from "../views/PrivateChat";
+import RoomManagement from "../views/admin/RoomManagement";
 
 export const router = createBrowserRouter([
   {
@@ -69,6 +70,10 @@ export const router = createBrowserRouter([
         path: "logout",
         element: <Logout />,
       },
+      {
+        path: "room-management",
+        element: <RoomManagement />,
+      }
     ],
   },
 
