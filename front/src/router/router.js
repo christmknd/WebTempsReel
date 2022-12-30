@@ -10,6 +10,7 @@ import PageNotFound from "../views/PageNotFound";
 import Home from "../views/user/Home";
 import UserApp from "../views/user/UserApp";
 import ServiceClient from "../views/user/ServiceClient";
+import ChatRoom from "../views/user/ChatRoom";
 
 // Admin
 import AdminApp from "../views/admin/AdminApp";
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
       {
         path: "service-client",
         element: <ServiceClient />,
+      },
+      {
+        path: "chatroom",
+        element: <ChatRoom />,
       },
       {
         path: "private-chat",
