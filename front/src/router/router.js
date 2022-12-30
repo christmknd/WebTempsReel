@@ -16,6 +16,7 @@ import AdminApp from "../views/admin/AdminApp";
 import SavAdmin from "../views/admin/SavAdmin";
 import Chat from "../views/PrivateChat";
 import RoomManagement from "../views/admin/RoomManagement";
+import AnnonceCommercial from "../views/admin/AnnonceCommercial";
 
 export const router = createBrowserRouter([
   {
