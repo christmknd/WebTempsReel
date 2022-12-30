@@ -43,6 +43,7 @@ server.on("listening", onListening);
 const registerChatbotHandlers = require("./ws/chatbot");
 const registerSavHandlers = require("./ws/sav");
 const registerPrivateChatHandlers = require("./ws/privateChat");
+const registerChatRoomHandlers = require("./ws/chatRooms");
 const getUser = require("./ws/auth.js");
 const userService = require("./http/user/user.service.js");
 
@@ -51,6 +52,7 @@ const onConnectionClient = (socket) => {
 
   registerPrivateChatHandlers(io, socket);
   registerChatbotHandlers(io, socket);
+  registerChatRoomHandlers(io, socket);
   registerSavHandlers(io, socket);
   socket.on("disconnect", () => {
     console.log(`user disconnected ${socket.id}`);
