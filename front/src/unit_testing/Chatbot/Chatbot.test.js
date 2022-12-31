@@ -1,0 +1,1 @@
+import ChatBot from "../../components/ChatBot/ChatBot";
