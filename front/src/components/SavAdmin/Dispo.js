@@ -18,11 +18,11 @@ function Dispo() {
       style={{ border: "solid", margin: "10px", padding: "10px" }}
     >
       {dispo ? (
-        <button style={{ color: "red" }} onClick={activDispo}>
+        <button data-testid="activate" style={{ color: "red" }} onClick={activDispo}>
           Désactiver ma disponibilité
         </button>
       ) : (
-        <button style={{ color: "green" }} onClick={activDispo}>
+        <button data-testid="activate" style={{ color: "green" }} onClick={activDispo}>
           Activer ma disponibilité
         </button>
       )}

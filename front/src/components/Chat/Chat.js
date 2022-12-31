@@ -65,7 +65,7 @@ function Chat(props) {
           value={message}
           onChange={handleChangeMessage}
         />
-        <input disabled={message ? false : true} type="submit" value="Submit" />
+        <input data-testid="finalInput" disabled={message ? false : true} type="submit" value="Submit" />
       </form>
     </div>
   );
