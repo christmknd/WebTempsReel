@@ -10,6 +10,7 @@ const PrivateChat = () => {
   const [users, setUsers] = useState([]);
   const [messages, setMessages] = useState([]);
   const [queryParameters] = useSearchParams();
+  const [currentUser, setCurrentUser] = useState("");
   const receiver = queryParameters.get("user");
   const [notmoving, setNotmoving] = useState(false);
 
@@ -44,6 +45,7 @@ const PrivateChat = () => {
   };
 
   useEffect(() => {
+    setCurrentUser(localStorage.getItem("username"));
     loadUserList();
   }, []);
 
@@ -70,7 +72,16 @@ const PrivateChat = () => {
       }}
     >
       {/* {JSON.stringify(messages, null, 2)} */}
-      <h1> Chatroom </h1>
+      <h1> Private chat </h1>
+      Welcome to your private chat{" "}
+      <strong
+        style={{
+          fontWeight: "bold",
+          color: "#007bff",
+        }}
+      >
+        {currentUser}
+      </strong>
       <p
         style={{
           fontWeight: "bold",
@@ -121,9 +132,7 @@ const PrivateChat = () => {
           </p>
         ))}
       </div>
-
       {/* chat space */}
-
       {receiver && (
         <div
           style={{
