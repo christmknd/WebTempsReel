@@ -40,7 +40,7 @@ function AnnonceCommercial() {
             onChange={handleChangeText}
           />
         </label>
-        <input type="submit" value="Envoyer" />
+        <input data-testid = "submit" type="submit" value="Envoyer" />
       </form>
     </div>
   );
