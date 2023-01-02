@@ -1,4 +1,4 @@
-import Dispo from '../../components/SavAdmin/Dispo'
+import Dispo from '../../../components/SavAdmin/Dispo'
 import {render, screen , fireEvent, getByTestId} from '@testing-library/react';
 
 describe(Dispo, () => {

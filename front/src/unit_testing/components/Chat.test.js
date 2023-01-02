@@ -1,4 +1,4 @@
-import Chat from '../components/Chat/Chat';
+import Chat from '../../components/Chat/Chat';
 import {render, fireEvent, getByTestId} from '@testing-library/react';
 
 describe(Chat, () => {

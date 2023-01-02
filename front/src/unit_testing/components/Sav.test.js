@@ -1,4 +1,4 @@
-import Sav from '../components/Sav/Sav';
+import Sav from '../../components/Sav/Sav';
 import {render, fireEvent} from '@testing-library/react'
 
 describe( Sav, () => {

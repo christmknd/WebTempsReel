@@ -1,4 +1,4 @@
-import Demands from '../../components/SavAdmin/Demands'
+import Demands from '../../../components/SavAdmin/Demands'
 import {render, fireEvent, getByTestId } from '@testing-library/react';
 
 describe(Demands, () => {
