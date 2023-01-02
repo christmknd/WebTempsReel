@@ -18,7 +18,7 @@ function Dispo() {
       style={{ border: "solid", margin: "10px", padding: "10px" }}
     >
       {dispo ? (
-        <button data-testid="activate" style={{ color: "red" }} onClick={activDispo}>
+        <button data-testid="desactivate" style={{ color: "red" }} onClick={activDispo}>
           Désactiver ma disponibilité
         </button>
       ) : (

@@ -39,8 +39,8 @@ function Demands(props) {
         {users.map((el) => (
           <li key={el.id}>
             {el.username} -
-            <button onClick={() => props.acceptDemand(el)}>Accept</button>
-            <button onClick={() => declineDemand(el)}>Decline</button>
+            <button data-testid="accept" onClick={() => props.acceptDemand(el)}>Accept</button>
+            <button data-testid="decline"  onClick={() => declineDemand(el)}>Decline</button>
           </li>
         ))}
       </ul>
