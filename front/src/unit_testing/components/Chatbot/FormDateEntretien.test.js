@@ -3,9 +3,6 @@ import {render, fireEvent} from '@testing-library/react';
 
 describe(FormDateEntretien, () => {
     
-    it('renders components', () => {
-        render(<form></form> )
-    })
 
     it('message is changed when message is typed', () => {
         const handleChangeMessage = jest.fn()

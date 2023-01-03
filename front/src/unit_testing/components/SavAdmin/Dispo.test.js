@@ -3,10 +3,6 @@ import {render, screen , fireEvent, getByTestId} from '@testing-library/react';
 
 describe(Dispo, () => {
 
-    it('renders components', () => {
-        render(<div className='Dispo'></div>)
-    })
-
     it('call the function to make me available when the button is clicked', () => {
         const activDispo = jest.fn()
         const {getByTestId } = render(<div className='Dispo'> <button data-testid="desactivate"  onClick={activDispo}>Decline</button> </div> )

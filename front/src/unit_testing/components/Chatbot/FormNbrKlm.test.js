@@ -2,10 +2,6 @@ import FormNbrKlm from '../../../components/ChatBot/FormNbrKlm';
 import {render, fireEvent} from '@testing-library/react';
 
 describe(FormNbrKlm, () => {
-    
-    it('renders components', () => {
-        render(<form></form> )
-    })
 
     it('message is changed when message is typed', () => {
         const handleChangeNumber= jest.fn()

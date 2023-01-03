@@ -1,19 +1,37 @@
 import Chat from '../../components/Chat/Chat';
-import {render, fireEvent, getByTestId} from '@testing-library/react';
+import {render, fireEvent, getByTestId, getByPlaceholderText, waitFor} from '@testing-library/react';
+import socketIOClient from "socket.io-client";
 
 describe(Chat, () => {
 
-    it('renders Chat', () => {
-        render( <div> <form></form> </div> )
+    it('send message via socket.io', () => {
+        
+        const socket = socketIOClient("ws:localhost");
+        const {container} = render( <form><input data-testid="finalInput"/></form> );
+        socket.emit("send:message", 'my message');
+        socket.on("send:message", res => {
+            expect(res).toEqual('my message')
+        })
     })
+  
 
-    it('message is changed when message is typed', () => {
-        const handleChangeMessage = jest.fn()
-        const { getByTestId } = render(<form><input data-testid="finalInput"></input> </form>);
-        const onChangeInput= getByTestId('finalInput')
+    it('send message via Web socket',async () => {
+        const handleSubmitMessage = jest.fn() 
+        const handleChangeMessage = jest.fn() 
+        const {getByPlaceholderText, getByTestId} = render( 
+        <form onSubmit={handleSubmitMessage}> 
+        <input onChange={handleChangeMessage} placeholder="Write a message" /> 
+        <input data-testid="finalInput"/>
+        </form> 
+        )
+        const messageInput = getByPlaceholderText("Write a message")
+        fireEvent.change(messageInput,{ target: { value: 'message' } } )
 
-        fireEvent.change(onChangeInput,{ target: { value: 'message' } } )
+        expect(messageInput.value).toBe('message')
 
-        expect(onChangeInput.value).toBe('message')
+        
+        fireEvent.submit(getByTestId("finalInput"));
+        expect(handleSubmitMessage).toHaveBeenCalled();
+
     })
 })
